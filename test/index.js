@@ -18,9 +18,13 @@ describe("Index Test", function(){
         // Check if that Short URL is Redirecting
 
         res = await request(app).get(`/${res.body.id}`);
-        console.log(res.headers.location);
         assert.strictEqual(res.status, 302, 'Status is not 302');
         assert.equal(res.headers.location, url, `Redirection should happen to ${url} and not ${res.headers.location}`);
+    })
+    it("Check with invalid ID",async function(){
+        res = await request(app).get(`/NOTExisiting`);
+        assert.strictEqual(res.status, 404, 'Status is not 302');
+        assert.equal(res.text, `Not found`);
     })
 })
 
