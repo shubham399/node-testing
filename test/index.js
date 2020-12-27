@@ -20,6 +20,11 @@ describe("Index Test", function(){
         res = await request(app).get(`/${res.body.id}`);
         assert.strictEqual(res.status, 302, 'Status is not 302');
         assert.equal(res.headers.location, redirectURL, `Redirection should happen to ${redirectURL} and not ${res.headers.location}`);
+    })   
+    it("Try Adding with Empty Body", async function(){
+        let res = await request(app).post("/").send();
+        assert.strictEqual(res.status, 400, 'Status is not 400');
+        assert.strictEqual(res.text, "Empty URL", 'Response must contain `Empty URL`');
     })
     it("Check with invalid ID",async function(){
         res = await request(app).get(`/NOTExisiting`);

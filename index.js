@@ -23,10 +23,17 @@ app.get('/', (req, res) => {
 })
 
 app.post('/',(req,res) =>{
-  let id = makeid(5);
-  let obj = {url:req.body.url,id}
-  dataStore.push(obj)
-  res.json(obj)
+  if(req.body.url){
+    let id = makeid(5);
+    let obj = {url:req.body.url,id}
+    dataStore.push(obj)
+    res.json(obj)
+  }
+  else{
+    res.status(400);
+    res.send("Empty URL")
+  }
+  
 })
 
 app.get('/:id',(req,res) =>{
